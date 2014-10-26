@@ -1,0 +1,16 @@
+$(document).ready(function()
+{
+    $('#isLink').change(function()
+    {   
+        if($(this).prop('checked'))
+        {   
+            $('.threadInfo').hide();
+            $('.link').show();
+        }   
+        else
+        {   
+            $('.threadInfo').show();
+            $('.link').hide();
+        }   
+    }); 
+});

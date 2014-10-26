@@ -1,0 +1,18 @@
+name:默认模板
+parser:default
+code:default
+author:蝉知官方
+desc:这是蝉知企业门户系统默认模板
+version:2.5
+chanzhiVersion:2.5
+charge:free
+license:http://www.chanzhi.org/book/chanzhieps/58_license.html
+themes:
+   default:默认模板
+   blue:蓝色
+   brightdark:蝉憩
+   flat:清泉
+   tartan:蝉之格
+   tree:蝉之树
+   wide:宽屏
+   colorful:缤纷

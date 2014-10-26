@@ -1,0 +1,18 @@
+name:Default
+parser:default
+code:default
+author:Chanzhi
+desc:This is the default template of chanzhieps.
+version:2.5
+chanzhiVersion:2.5
+charge:free
+license:http://www.chanzhi.org/book/chanzhieps/58_license.html
+themes:
+   default:Default
+   blue:Blue
+   brightdark:Brightdark
+   flat:Flat
+   tartan:Tartan
+   tree:Tree
+   wide:Wide
+   colorful:Colorful

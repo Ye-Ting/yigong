@@ -1,0 +1,215 @@
+/*
+ * Chanzhi custom theme
+ *
+ * This file built by machine at {buildTime} automatically.
+ * Template: {template}
+ * Theme:    {theme}
+ * ---------- Variables ----------
+{variablesCode} * -------------------------------
+ */
+
+/* Fixed old style */
+#headNav .login-msg:after, #headNav nav > a:after, #msgBox:after {display: none}
+#siteLogo {display: block;}
+#headTitle {margin: 0}
+#headTitle > .wrapper {display: block;}
+#siteSlogan {top: -42px;}
+@media (min-width: 992px){
+  .m-index-index #header .wrapper {padding: 0 10px;}
+  #navbarCollapse {padding-right: 0;}
+}
+
+// Default variables
+@darkColor: #333;
+@lightColor: #fff;
+
+// User variables
+@import "@variables";
+
+@text-color-inverse : contrast(@color-primary, #666, #e5e5e5);
+@color-primary-dark : darken(@color-primary, 8%);
+@color-pale         : spin(hsl(hue(@color-primary), 54%, 95%), -7);
+
+// Mixins
+.box-shadow(@shadow)
+{
+  -moz-box-shadow    : @shadow;
+  -webkit-box-shadow : @shadow; // iOS <4.3 & Android <4.1
+  box-shadow         : @shadow;
+}
+.background(@color; @image; @imageRepeat; @imagePositionX; @imagePositionY)
+{
+    background: @color @image @imageRepeat @imagePositionX @imagePositionY;
+}
+
+.font(@color; @size; @font; @weight)
+{
+    color: @color;
+    font-size: @size;
+    font-family: @font;
+    font-weight: @weight;
+}
+.textstyle(@color; @size; @weight)
+{
+    color: @color;
+    font-size: @size;
+    font-weight: @weight;
+}
+.border(@style; @color; @width; @radius)
+{
+    border: @style @color @width;
+    border-radius: @radius;
+}
+.caret(@color)
+{
+    border-top-color: @color;
+    border-bottom-color: @color;
+}
+
+.columnLayout(@inverse) when (@inverse)
+{
+    .col-main {float: right;}
+    .col-side {float: left;}
+}
+
+.footerLayout(@borderStyle; @backColor) when not(@borderStyle = none), not(@backColor = transparent)
+{
+    #footer {padding: 20px 15px;}
+    #footNav {left: 15px;}
+    #powerby {right: 15px;}
+}
+
+.globalFontFamily(@font) when not(@font = inherit)
+{
+    font-family: @font;
+}
+
+.background-image(@image) when not(@image = inherit)
+{
+    background-image: @image;
+}
+
+a:visited {color: @text-color}
+a:hover, a:focus {color: @color-primary}
+
+.btn-primary {color: @text-color-inverse; background-color: @color-primary; border-color: @color-primary-dark}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary {color: lighten(@text-color-inverse, 10%); background-color: @color-primary-dark; border-color: @color-primary-dark}
+.btn-primary:active, .btn-primary.active, .open .dropdown-toggle.btn-primary {background-image: none}
+.btn-link {color: @color-primary}
+.btn-link:hover, .btn-link:focus {color: @color-primary-dark}
+a.btn-primary:visited, a.btn-danger:visited, a.btn-info:visited, a.warning-info:visited, a.btn-success:visited {color: @text-color-inverse;}
+
+.label-primary {background-color: @color-primary}
+.label-primary[href]:hover, .label-primary[href]:focus {background-color: @color-primary-dark}
+.label-primary[href]:hover, .label-primary[href]:focus {background-color: @color-primary-dark}
+
+.text-primary {color: @color-primary}
+.text-primary:hover, .text-link:hover, .text-link:active{color: @color-primary-dark}
+
+.form-control:focus {border-color: @color-primary-dark;}
+
+.ke-container.focus, .ke-input-text:focus {border-color: @color-primary-dark !important;}
+.ke-menu-item-on, .ke-colorpicker-cell-on {background-color: @color-primary !important}
+
+a.list-group-item:hover, a.list-group-item:focus {background-color: @color-primary-dark; color: @text-color-inverse}
+.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {background-color: @color-primary;}
+
+.nav-secondary > li > a:hover,
+.nav-primary > li > a:hover {background-color: lighten(@color-primary, 5%); border-color: #ddd; color: @text-color-inverse;}
+.nav-secondary > li.active > a,
+.nav-secondary > li.active > a:hover,
+.nav-secondary > li.active > a:focus,
+.nav-primary > li.active > a,
+.nav-primary > li.active > a:hover,
+.nav-primary > li.active > a:focus {background-color: @color-primary; border-color: #ddd}
+.booksNav .nav-primary > li.active > a, .booksNav .nav-primary > li.active > a:hover, .booksNav .nav-primary > li.active > a:focus, .nav-secondary > li.active > a, .nav-secondary > li.active > a:hover, .nav-secondary > li.active > a:focus {color: @color-primary; background: #fff;}
+
+.pager > .active > a, .pager > .active > span, .pager > .active > a:hover, .pager > .active > span:hover, .pager > .active > a:focus, .pager > .active > span:focus {background-color: @color-primary}
+
+.table tr > td.active, .table tr > th.active, .table tr.active > td, .table tr.active > th {background-color: @color-pale}
+table.tablesorter thead tr .headerSortUp:after,table.tablesorter thead tr .headerSortDown:after {color: @color-primary !important}
+
+.chosen-container-single .chosen-search:focus, .chosen-container-active .chosen-single, .chosen-container-active .chosen-choices {border-color: @color-primary !important}
+.chosen-container .chosen-results li.highlighted {background-color: @color-primary-dark !important}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus, .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus, .dropdown-submenu:hover > a, .dropdown-submenu:focus > a {background-color: @color-primary;}
+
+.messager-primary {background-color: @color-primary}
+
+a.card:hover, .card:hover a {color: @color-primary}
+
+.comment:hover > .content > .actions > a {color: @color-primary}
+
+/* Navbar */
+#navbar .nav > li > a:hover,
+#navbar .nav > li > a:focus,
+#navbar .dropdown-submenu:focus > a,
+#navbar .dropdown-submenu:hover > a,
+#navbar .dropdown-menu > li > a:focus,
+#navbar .dropdown-menu > li > a:hover {color: #ffffff; background: lighten(@color-primary, 8%);}
+#navbar .nav > li.active > a,
+#navbar .nav > li.active > a:hover {color: #ffffff; background: @color-primary;}
+
+/* for ie8 start */
+@media (min-width: 768px)
+{
+    .ie-8
+    {
+        #navbar .dropdown-menu > li > a:hover,
+        #navbar .dropdown-menu > li > a:focus,
+        #navbar .dropdown-submenu:hover > a,
+        #navbar .dropdown-submenu:focus > a,
+        #navbar .nav > li > a:hover,
+        #navbar .nav > li > a:focus,
+        #navbar .nav > li.active > a,
+        #navbar .nav > li.active > a:hover {color: #ffffff; background: @color-primary;}
+    }
+}
+/* for ie8 end */
+
+.carousel-control:hover {background: @color-primary; text-align: center; background: none\0;}
+
+/* Right docker */
+.docker-right .icon-mobile-phone {background: @color-primary}
+
+/* Company page */
+.m-company-index .row > .col-md-9 > .panel > .panel-heading i {background: @color-primary; color: @text-color-inverse;}
+
+#blogNav .nav > li > a:hover,
+#blogNav .nav > li > a:focus,
+#blogNav .nav > li.active > a,
+#blogNav .nav > li.active > a:hover {color: @color-primary; border-bottom: 4px solid @color-primary;}
+
+/* style of footer */
+.m-blog #footNav .icon-rss-sign:hover{text-decoration: none; color: @color-primary}
+
+/* articles */
+.m-blog #articles .card-heading a{font-weight: bold; color: @color-primary}
+
+/* responsive for mobile devices */
+@media (max-width: 767px)
+{
+    #blogNav .nav > li.active > a,
+    #blogNav .nav > li.active > a:hover {background: @color-primary;}
+
+    #blogNav .navbar-nav.navbar-right > li > a:hover,
+    #blogNav .navbar-nav.navbar-right > li > a:focus,
+    #blogNav .navbar-nav.navbar-right > li.active > a,
+    #blogNav .navbar-nav.navbar-right > li.active > a:hover {color: @color-primary; border-bottom: 4px solid @color-primary;}
+}
+
+body
+{
+    .globalFontFamily(@font-family);
+    font-size: @font-size;
+    color: @text-color;
+    font-weight: @font-weight;
+}
+
+/* Column style */
+@media (min-width: 992px)
+{
+    .columnLayout(@sidebar-pull-left);
+    .col-main {width: 100% - @sidebar-width;}
+    .col-side {width: @sidebar-width}
+}

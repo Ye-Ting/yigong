@@ -1,0 +1,70 @@
+.panel.panel-templates {box-shadow: none}
+
+.tab-pane > .table-form {margin-top: 10px;}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {color: #333; font-weight: bold;}
+
+.w-222px {width: 222px}
+
+.cards {padding: 0; margin: 0;}
+.col-card {margin: 0;}
+.card {position: relative; margin-bottom: 20px; overflow: visible; min-height: 302px; padding-right: 350px;}
+.cards > .col-card:last-child .card {margin-bottom: 0;}
+.teamplate-choosed {display: none}
+.card.current .teamplate-choosed {display: block; position: absolute; font-size: 28px; color: #fff; background: #229F24; width: 50px; height: 50px; right: 0; top: 0; text-align: center; padding-left: 10px; line-height: 35px; border-bottom-left-radius: 50px; z-index: 99}
+.card .card-actions {position: absolute; right: 350px; top: 5px; padding: 10px 20px}
+.template-img {width: 350px; position: absolute; right: 0; top: 0; bottom: 0; box-shadow: -1px 0 5px rgba(0,0,0,0.14); background: #f1f1f1}
+.themes-tip {display: inline-block; border-radius: 16px; background: #ddd; padding: 6px 12px; position: relative;}
+.current-theme-tip {display: none}
+.card.current .current-theme-tip {display: inline;}
+.themes-list {padding: 6px; border-top: 1px dashed #ddd}
+.theme {width: 130px; float: left; cursor: pointer; margin: 6px 10px}
+.theme-name {padding: 5px 0; background-color: #f1f1f1}
+.theme-card {overflow: hidden; border: 1px solid #aaa; border-radius: 4px; border-radius: 4px; opacity: 0.8; position: relative;}
+.theme-card > .icon {position: absolute; right: 0; top: 0; display: none; z-index: 10}
+.theme-img {height: 65px; overflow: hidden; opacity: 0.8}
+.theme:hover .theme-img {opacity: 1;}
+.card-template.current .theme.current > .theme-name {color: #47A447}
+.card-template.current .theme.current .theme-card > .icon {position: absolute; right: 0; top: 0; display: block; color: #fff; background: none; width: 0; height: 0; border: 20px solid #229F24; border-left-color: transparent; border-bottom-color: transparent;}
+.card-template.current .theme.current .theme-card > .icon:before {position: absolute; right: -15px; top: -15px}
+.card-template.current .theme.current .theme-img {border-color: #47A447; opacity: 1}
+.card-template.current .theme.current .theme-card {border-color: #47A447; -moz-box-shadow:0px 0px 6px #47A447; -webkit-box-shadow:0px 0px 6px #47A447; box-shadow:0px 0px 6px #47A447; opacity: 1}
+.theme-card > .btn-custom {position: absolute; display: none; opacity: 0; width: 90px; left: 20px; top: 23px; z-index: 10; color: #fff!important}
+.theme.current .theme-card:hover > .btn-custom {opacity: 1; display: block;}
+.theme.current.custom:hover .theme-img {-webkit-filter: blur(5px);-moz-filter: blur(5px);-ms-filter: blur(5px);-o-filter: blur(5px);filter: blur(5px);filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=15, MakeShadow=false);}
+
+.color-tile {display: block; float: left; width: 30px; height: 30px; border-radius: 4px; border: 1px solid #ccc; margin: 2px 2px 0 0; cursor: pointer; transition: all 0.4s; text-align: center; line-height: 30px;}
+.color-tile[data="transparent"] {background-color: #eee; background-image: linear-gradient(45deg, #999 25%, transparent 25%, transparent 75%, #999 75%, #999), 
+linear-gradient(45deg, #999 25%, transparent 25%, transparent 75%, #999 75%, #999); background-size:12px 12px; background-position:0 0, 6px 6px}
+.color-tile:hover, .color-tile.active {border-color: #333; box-shadow: 0 1px 4px rgba(0,0,0,0.5)}
+.colorplate {float: left; width: 100%;}
+.colorplate .input-group-btn {width: 50%}
+.colorplate .input-group-btn > .btn {width: 100%; border-right: none}
+.color .icon-ok, .color .icon-question {display: none}
+.color.active > .icon-ok, .color.error > .icon-question, .color.active .input-group-btn > .dropdown-toggle > .icon-ok, .color.error .input-group-btn > .dropdown-toggle > .icon-question {display: inline;}
+.color.active.error .icon-ok {display: none}
+.color .input-group-addon {min-width: 40px; text-align: center;}
+.color .btn{text-shadow: none;}
+
+.dropdown-menu.colors {padding: 5px; width: 205px}
+
+.input-group-addon + .input-group-addon.fix-border {border-left: 1px solid #ccc}
+
+#customThemeForm caption {text-align: left; padding: 4px 15px 3px; background: #f5f5f5; border-bottom: 1px solid #e5e5e5}
+#customThemeForm .form-footer {padding: 10px 15px 10px 107px;}
+#customThemeForm .table-form {margin-bottom: 0;}
+#customThemeForm .table-form tr > th {width: 100px; vertical-align: top; line-height: 32px}
+#customThemeForm .table-form tr > td {padding-bottom: 0; padding-top: 0;}
+#customThemeForm .table-form tr > td .row > div {margin: 6px 0;}
+#customThemeForm .table-form tr > td .input-group-btn {line-height: 32px}
+
+#customLess-editor {min-height: 300px}
+#lessVarTableWrapper {overflow-y: auto; position: relative; padding-top: 31px;}
+#lessVarTableHead {position: absolute; width: 100%; left: 0; top: 0; right: 0}
+
+.modal.modal-fullscreen .modal-dialog {width: 100%!important; border-radius: 0; margin-top: 0!important; margin-bottom: 0;}
+
+#cssview {height: 100%;}
+.codeeditor-fullscreen .table-form {display: none}
+
+#resetTheme {color: #D2322D}
+#resetTheme:hover {color: #A82824}

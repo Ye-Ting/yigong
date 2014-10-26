@@ -1,0 +1,13 @@
+.modal-dialog{width: 700px;}
+.panel-body>.comments-list {margin: -15px -15px 0;}
+.comment{padding: 0 8px 5px; transition: all 0.5s;}
+.comment p{padding-left:3px;}
+.comment>.comments-list {margin-top: 5px; margin-left: 18px; padding-left: 25px;}
+.comment>.comment {border:1px solid #ccc;}
+.comment:hover {background-color: #fafafa;}
+.comment>.comments-list>.comment:hover {background-color: #fff}
+.comment .reply-box{padding:10px 0;}
+
+.pager {margin: 0; display: block;}
+.pager > .page { margin-bottom: -15px; font-size: 12px; text-align: right; color: #999;}
+.signed-user-info{padding: 6px 2px; margin-right: 10px;}

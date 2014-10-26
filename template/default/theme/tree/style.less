@@ -1,0 +1,138 @@
+/*
+ * Chanzhi custom theme
+ *
+ * This file built by machine at {buildTime} automatically.
+ * Template: {template}
+ * Theme:    {theme}
+ * ---------- Variables ----------
+{variablesCode} * -------------------------------
+ */
+
+/* Fixed old style */
+#headNav .login-msg:after, #headNav nav > a:after, #msgBox:after {display: none}
+@media (max-width: 767px) {#header {padding-right: 0;}}
+
+// Default variables
+@darkColor: #333;
+@lightColor: #fff;
+
+// User variables
+@import "@variables";
+
+// Mixins
+.box-shadow(@shadow)
+{
+  -moz-box-shadow    : @shadow;
+  -webkit-box-shadow : @shadow; // iOS <4.3 & Android <4.1
+  box-shadow         : @shadow;
+}
+.background(@color; @image; @imageRepeat; @imagePositionX; @imagePositionY)
+{
+    background: @color @image @imageRepeat @imagePositionX @imagePositionY;
+}
+
+.font(@color; @size; @font; @weight)
+{
+    color: @color;
+    font-size: @size;
+    font-family: @font;
+    font-weight: @weight;
+}
+.textstyle(@color; @size; @weight)
+{
+    color: @color;
+    font-size: @size;
+    font-weight: @weight;
+}
+.border(@style; @color; @width; @radius)
+{
+    border: @style @color @width;
+    border-radius: @radius;
+}
+.caret(@color)
+{
+    border-top-color: @color;
+    border-bottom-color: @color;
+}
+
+.columnLayout(@inverse) when (@inverse)
+{
+    .col-main {float: right;}
+    .col-side {float: left;}
+}
+
+.footerLayout(@borderStyle; @backColor) when not(@borderStyle = none), not(@backColor = transparent)
+{
+    #footer {padding: 20px 15px;}
+    #footNav {left: 15px;}
+    #powerby {right: 15px;}
+}
+
+.globalFontFamily(@font) when not(@font = inherit)
+{
+    font-family: @font;
+}
+
+.background-image(@image) when not(@image = inherit)
+{
+    background-image: @image;
+}
+
+/* Global style */
+body
+{
+    background-color: @background-color;
+    .background-image(@background-image);
+    background-repeat: @background-image-repeat;
+    background-position: @background-image-position-x @background-image-position-y;
+
+    .globalFontFamily(@font-family);
+    font-size: @font-size;
+    color: @text-color;
+    font-weight: @font-weight;
+}
+
+/* Links */
+a
+{
+    color: @link-color;
+    font-decoration: @link-decoration;
+}
+a:hover
+{
+    color: @link-hover-color;
+}
+a:active, a:focus
+{
+    color: lighten(@link-hover-color, 10%);
+}
+a:visited
+{
+    color: @link-visited-color;
+}
+
+/* Column style */
+@media (min-width: 992px)
+{
+    .columnLayout(@sidebar-pull-left);
+    .col-main {width: 100% - @sidebar-width;}
+    .col-side {width: @sidebar-width}
+}
+
+/* Header */
+#siteName, #siteSlogan {color: contrast(@background-color, #6E2E16, #E3D7A2)}
+.fixedSiteNameContrastColor(@backColor) when (@backColor = transparent)
+{
+    #siteName, #siteSlogan {color: #6E2E16}
+}
+.fixedSiteNameContrastColor(@background-color);
+
+/* Footer */
+#footer
+{
+    margin-bottom: 20px;
+    background-color: @footer-backcolor;
+    .border(@footer-border-style, @footer-border-color, @border-width, @border-radius);
+}
+
+.footerLayout(@footer-border-style, @footer-backcolor);
