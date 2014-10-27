@@ -507,7 +507,7 @@ body {background: #232323;}
 @media (min-width: 1200px) {.page-container, .m-index-index .page-content, .m-index-index #links, #focus {max-width: inherit;}}
 
 /* Header */
-#header {padding: 0; border-bottom: 1px solid #e5e5e5; min-height: 112px; background: #fff}
+#header {/*padding: 0; */border-bottom: 1px solid #e5e5e5; min-height: 112px; background: #fff}
 #headNav:empty {display: none}
 #headNav {width: 100%; position: absolute; top: 0; right: 0; border-bottom: 1px solid #e5e5e5; height: 42px; text-align: right;}
 #headNav nav {float: right;}

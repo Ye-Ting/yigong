@@ -75,8 +75,8 @@ $lang->wechat->response->newsBlockList['articleTree']   = '文章分类';
 $lang->wechat->response->newsBlockList['latestArticle'] = '最新文章';
 $lang->wechat->response->newsBlockList['hotArticle']    = '热门文章';
 $lang->wechat->response->newsBlockList['productTree']   = '产品分类';
-$lang->wechat->response->newsBlockList['latestProduct'] = '最新产品';
-$lang->wechat->response->newsBlockList['hotProduct']    = '热门产品';
+$lang->wechat->response->newsBlockList['latestProduct'] = '最新捐助';
+$lang->wechat->response->newsBlockList['hotProduct']    = '热门捐助';
 
 $lang->wechat->message = new stdclass();
 $lang->wechat->message->from     = '称呼';
