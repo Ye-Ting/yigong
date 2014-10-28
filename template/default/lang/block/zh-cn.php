@@ -19,7 +19,7 @@ $lang->block->default->typeList['hotArticle']      = '热门文章';
 
 $lang->block->default->typeList['latestProduct']   = '最新产品';
 $lang->block->default->typeList['featuredProduct'] = '首页推荐产品';
-$lang->block->default->typeList['hotProduct']      = '热门产品';
+$lang->block->default->typeList['hotProduct']      = '公益行动';
 
 $lang->block->default->typeList['articleTree']     = '文章分类';
 $lang->block->default->typeList['productTree']     = '产品分类';

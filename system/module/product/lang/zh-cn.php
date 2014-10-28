@@ -10,7 +10,7 @@
  * @link        http://www.chanzhi.org
  */
 $lang->product->common = '产品维护';
-$lang->product->home   = '产品中心';
+$lang->product->home   = '项目中心';
 
 $lang->product->id         = '编号';
 $lang->product->category   = '类目';
@@ -47,7 +47,7 @@ $lang->product->js         = 'JS';
 $lang->product->currencyIcon = "<i class='icon-yen'> </i>";
 
 $lang->product->list       = '产品列表';
-$lang->product->hot        = '热门产品';
+$lang->product->hot        = '公益行动';
 $lang->product->admin      = '维护产品';
 $lang->product->create     = '添加产品';
 $lang->product->edit       = '编辑产品';
