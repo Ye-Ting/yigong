@@ -105,6 +105,7 @@ define('TABLE_RELATION',       $config->db->prefix . 'relation');
 define('TABLE_PRODUCT',        $config->db->prefix . 'product');
 define('TABLE_PRODUCT_CUSTOM', $config->db->prefix . 'product_custom');
 define('TABLE_ARTICLE',        $config->db->prefix . 'article');
+define('TABLE_ACTIVITY',       $config->db->prefix . 'activity');
 define('TABLE_BLOCK',          $config->db->prefix . 'block');
 define('TABLE_TAG',            $config->db->prefix . 'tag');
 define('TABLE_BOOK',           $config->db->prefix . 'book');
