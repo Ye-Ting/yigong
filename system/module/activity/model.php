@@ -22,8 +22,8 @@ class activityModel extends model
     public function getByID($activityID, $replaceTag = true)
     {   
         /* Get activity self. */
-        $activity = $this->dao->select('*')->from(TABLE_activity)->where('alias')->eq($activityID)->fetch();
-        if(!$activity) $activity = $this->dao->select('*')->from(TABLE_activity)->where('id')->eq($activityID)->fetch();
+        $activity = $this->dao->select('*')->from(TABLE_ACTIVITY)->where('id')->eq($activityID)->fetch();
+        if(!$activity) $activity = $this->dao->select('*')->from(TABLE_ACTIVITY)->where('id')->eq($activityID)->fetch();
 
         if(!$activity) return false;
         
@@ -59,8 +59,8 @@ class activityModel extends model
     public function getPageByID($pageID)
     {
         /* Get activity self. */
-        $page = $this->dao->select('*')->from(TABLE_activity)->where('alias')->eq($pageID)->andWhere('type')->eq('page')->fetch();
-        if(!$page) $page = $this->dao->select('*')->from(TABLE_activity)->where('id')->eq($pageID)->fetch();
+        $page = $this->dao->select('*')->from(TABLE_ACTIVITY)->where('alias')->eq($pageID)->andWhere('type')->eq('page')->fetch();
+        if(!$page) $page = $this->dao->select('*')->from(TABLE_ACTIVITY)->where('id')->eq($pageID)->fetch();
 
         if(!$page) return false;
         
@@ -87,7 +87,7 @@ class activityModel extends model
     {
         if($type == 'page')
         {
-            $activitys = $this->dao->select('*')->from(TABLE_activity)
+            $activitys = $this->dao->select('*')->from(TABLE_ACTIVITY)
                 ->where('type')->eq('page')
                 ->orderBy('id_desc')
                 ->page($pager)
@@ -157,7 +157,7 @@ class activityModel extends model
      */
     public function getPagePairs($pager = null)
     {
-        return $this->dao->select('id, title')->from(TABLE_activity)
+        return $this->dao->select('id, title')->from(TABLE_ACTIVITY)
             ->where('type')->eq('page')
             ->andWhere('addedDate')->le(helper::now())
             ->andWhere('status')->eq('normal')
@@ -177,7 +177,7 @@ class activityModel extends model
      */
     public function getPairs($categories, $orderBy, $pager = null)
     {
-        return $this->dao->select('t1.id, t1.title, t1.alias')->from(TABLE_activity)->alias('t1')
+        return $this->dao->select('t1.id, t1.title, t1.alias')->from(TABLE_ACTIVITY)->alias('t1')
             ->leftJoin(TABLE_RELATION)->alias('t2')->on('t1.id = t2.id')
             ->where('1=1')
             ->beginIf(defined('RUN_MODE') and RUN_MODE == 'front')
@@ -245,7 +245,7 @@ class activityModel extends model
     public function getPrevAndNext($current, $category)
     {
         $current = $this->getByID($current);
-        $prev = $this->dao->select('t1.id, title, alias')->from(TABLE_activity)->alias('t1')
+        $prev = $this->dao->select('t1.id, title, alias')->from(TABLE_ACTIVITY)->alias('t1')
            ->leftJoin(TABLE_RELATION)->alias('t2')->on('t1.id = t2.id')
            ->where('t2.category')->eq($category)
            ->andWhere('t1.status')->eq('normal')
@@ -254,7 +254,7 @@ class activityModel extends model
            ->limit(1)
            ->fetch();
 
-       $next = $this->dao->select('t1.id, title, alias')->from(TABLE_activity)->alias('t1')
+       $next = $this->dao->select('t1.id, title, alias')->from(TABLE_ACTIVITY)->alias('t1')
            ->leftJoin(TABLE_RELATION)->alias('t2')->on('t1.id = t2.id')
            ->where('t2.category')->eq($category)
            ->andWhere('t1.addedDate')->le(helper::now())
@@ -278,39 +278,26 @@ class activityModel extends model
     {
         $now = helper::now();
         $activity = fixer::input('post')
-            ->join('categories', ',')
             ->setDefault('addedDate', $now)
             ->add('editedDate', $now)
-            ->add('type', $type)
-            ->add('order', 0)
-            ->setIF(!$this->post->isLink, 'link', '')
-            ->stripTags('content', $this->config->allowedTags->admin)
             ->get();
-
-        $activity->keywords = seo::unify($activity->keywords, ',');
-        $activity->alias    = seo::unify($activity->alias, '-');
-        $activity->content  = $this->rtrimContent($activity->content);
-
-        $this->dao->insert(TABLE_activity)
-            ->data($activity, $skip = 'categories,uid,isLink')
+        // var_dump($activity);
+        $this->dao->insert(TABLE_ACTIVITY)
+            ->data($activity, $skip = 'uid,isLink')
             ->autoCheck()
-            ->batchCheckIF($type != 'page' and !$this->post->isLink, $this->config->activity->require->edit, 'notempty')
-            ->batchCheckIF($type == 'page' and !$this->post->isLink, $this->config->activity->require->page, 'notempty')
-            ->batchCheckIF($type != 'page' and $this->post->isLink, $this->config->activity->require->link, 'notempty')
-            ->batchCheckIF($type == 'page' and $this->post->isLink, $this->config->activity->require->pageLink, 'notempty')
-            ->checkIF(($type == 'page') and $this->post->alias, 'alias', 'unique', "type='page'")
             ->exec();
+
         $activityID = $this->dao->lastInsertID();
 
-        $this->loadModel('file')->updateObjectID($this->post->uid, $activityID, $type);
-        $this->file->copyFromContent($this->post->content, $activityID, $type);
+        // $this->loadModel('file')->updateObjectID($this->post->uid, $activityID, $type);
+        // $this->file->copyFromContent($this->post->content, $activityID, $type);
 
         if(dao::isError()) return false;
 
         /* Save activity keywords. */
-        $this->loadModel('tag')->save($activity->keywords);
+        // $this->loadModel('tag')->save($activity->keywords);
 
-        if($type != 'page') $this->processCategories($activityID, $type, $this->post->categories);
+        // if($type != 'page') $this->processCategories($activityID, $type, $this->post->categories);
         return $activityID;
     }
 
@@ -324,28 +311,17 @@ class activityModel extends model
     public function update($activityID, $type = 'activity')
     {
         $activity  = $this->getByID($activityID);
-        $category = array_keys($activity->categories);
+        // $category = array_keys($activity->categories);
 
         $activity = fixer::input('post')
-            ->stripTags('content', $this->config->allowedTags->admin)
-            ->join('categories', ',')
-            ->add('editor', $this->app->user->account)
             ->add('editedDate', helper::now())
-            ->setIF(!$this->post->isLink, 'link', '')
             ->get();
 
-        $activity->keywords = seo::unify($activity->keywords, ',');
-        $activity->alias    = seo::unify($activity->alias, '-');
-        $activity->content  = $this->rtrimContent($activity->content);
+        // $activity->keywords = seo::unify($activity->keywords, ',');
 
-        $this->dao->update(TABLE_activity)
-            ->data($activity, $skip = 'categories,uid,isLink')
+        $this->dao->update(TABLE_ACTIVITY)
+            ->data($activity,$skip = 'uid,isLink')
             ->autoCheck()
-            ->batchCheckIF($type != 'page' and !$this->post->isLink, $this->config->activity->require->edit, 'notempty')
-            ->batchCheckIF($type == 'page' and !$this->post->isLink, $this->config->activity->require->page, 'notempty')
-            ->batchCheckIF($type != 'page' and $this->post->isLink, $this->config->activity->require->link, 'notempty')
-            ->batchCheckIF($type == 'page' and $this->post->isLink, $this->config->activity->require->pageLink, 'notempty')
-            ->checkIF(($type == 'page') and $this->post->alias, 'alias', 'unique', "type='page' and id<>{$activityID}")
             ->where('id')->eq($activityID)
             ->exec();
 
@@ -354,8 +330,8 @@ class activityModel extends model
 
         if(dao::isError()) return false;
 
-        $this->loadModel('tag')->save($activity->keywords);
-        if($type != 'page') $this->processCategories($activityID, $type, $this->post->categories);
+        // $this->loadModel('tag')->save($activity->keywords);
+        // if($type != 'page') $this->processCategories($activityID, $type, $this->post->categories);
 
         return !dao::isError();
     }
@@ -373,7 +349,7 @@ class activityModel extends model
         if(!$activity) return false;
 
         $this->dao->delete()->from(TABLE_RELATION)->where('id')->eq($activityID)->andWhere('type')->eq($activity->type)->exec();
-        $this->dao->delete()->from(TABLE_activity)->where('id')->eq($activityID)->exec();
+        $this->dao->delete()->from(TABLE_ACTIVITY)->where('id')->eq($activityID)->exec();
 
         return !dao::isError();
     }
@@ -420,23 +396,23 @@ class activityModel extends model
      */
     public function createPreviewLink($activityID)
     {
-        $activity = $this->getByID($activityID);
-        if(empty($activity)) return null;
-        $module  = $activity->type;
-        $param   = "activityID=$activityID";
-        if($activity->type != 'page')
-        {
-            $categories    = $activity->categories;
-            $categoryAlias = current($categories)->alias;
-            $alias         = "category=$categoryAlias&name=$activity->alias";
-        }
-        else
-        {
-            $alias = "name=$activity->alias";
-        }
+        // $activity = $this->getByID($activityID);
+        // if(empty($activity)) return null;
+        // $module  = $activity->type;
+        // $param   = "activityID=$activityID";
+        // if($activity->type != 'page')
+        // {
+        //     $categories    = $activity->categories;
+        //     $categoryAlias = current($categories)->alias;
+        //     $alias         = "category=$categoryAlias&name=$activity->alias";
+        // }
+        // else
+        // {
+        //     $alias = "name=$activity->alias";
+        // }
 
-        $link = commonModel::createFrontLink($module, 'view', $param, $alias);
-        if($activity->link) $link = $activity->link;
+        // $link = commonModel::createFrontLink($module, 'view', $param, $alias);
+        // if($activity->link) $link = $activity->link;
 
         return $link;
     }
@@ -475,7 +451,7 @@ class activityModel extends model
             ->add('editedDate', helper::now())
             ->get();
 
-        $this->dao->update(TABLE_activity)->data($data, $skip = 'uid')->autoCheck()->where('id')->eq($activityID)->exec();
+        $this->dao->update(TABLE_ACTIVITY)->data($data, $skip = 'uid')->autoCheck()->where('id')->eq($activityID)->exec();
         
         return !dao::isError();
     }
@@ -494,7 +470,7 @@ class activityModel extends model
             ->add('editedDate', helper::now())
             ->get();
 
-        $this->dao->update(TABLE_activity)->data($data, $skip = 'uid')->autoCheck()->where('id')->eq($activityID)->exec();
+        $this->dao->update(TABLE_ACTIVITY)->data($data, $skip = 'uid')->autoCheck()->where('id')->eq($activityID)->exec();
         
         return !dao::isError();
     }

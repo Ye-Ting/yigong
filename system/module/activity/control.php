@@ -98,7 +98,7 @@ class activity extends control
         $this->view->title      = $this->lang->$type->admin;
         $this->view->type       = $type;
         $this->view->categoryID = $categoryID;
-        $this->view->activitys   = $activitys;
+        $this->view->activitys  = $activitys;
         $this->view->pager      = $pager;
         $this->view->orderBy    = $orderBy;
 
@@ -118,11 +118,11 @@ class activity extends control
         $this->lang->activity->menu = $this->lang->{$type}->menu;
         $this->lang->menuGroups->activity = $type;
 
-        $categories = $this->loadModel('tree')->getOptionMenu($type, 0, $removeRoot = true);
-        if(empty($categories) && $type != 'page')
-        {
-            die(js::locate($this->createLink('tree', 'redirect', "type=$type")));
-        }
+        // $categories = $this->loadModel('tree')->getOptionMenu($type, 0, $removeRoot = true);
+        // if(empty($categories) && $type != 'page')
+        // {
+        //     die(js::locate($this->createLink('tree', 'redirect', "type=$type")));
+        // }
 
         if($_POST)
         {
@@ -155,21 +155,21 @@ class activity extends control
      */
     public function edit($activityID, $type)
     {
-        $this->lang->activity->menu = $this->lang->$type->menu;
+        // $this->lang->activity->menu = $this->lang->$type->menu;
         $this->lang->menuGroups->activity = $type;
 
         $activity    = $this->activity->getByID($activityID, $replaceTag = false);
-        $categories = $this->loadModel('tree')->getOptionMenu($type, 0, $removeRoot = true);
-        if(empty($categories) && $type != 'page')
-        {
-            die(js::alert($this->lang->tree->noCategories) . js::locate($this->createLink('tree', 'browse', "type=$type")));
-        }
+        // $categories = $this->loadModel('tree')->getOptionMenu($type, 0, $removeRoot = true);
+        // if(empty($categories) && $type != 'page')
+        // {
+            // die(js::alert($this->lang->tree->noCategories) . js::locate($this->createLink('tree', 'browse', "type=$type")));
+        // }
 
         if($_POST)
         {
             $this->activity->update($activityID, $type);
             if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
-            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('admin', "type=$type")));
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('admin')));
         }
 
         if($type != 'page') 
@@ -180,7 +180,7 @@ class activity extends control
 
         $this->view->title      = $this->lang->activity->edit;
         $this->view->activity    = $activity;
-        $this->view->categories = $categories;
+        // $this->view->categories = $categories;
         $this->view->type       = $type;
         $this->display();
     }
@@ -199,7 +199,7 @@ class activity extends control
 
         if($activity->link)
         {
-            $this->dao->update(TABLE_activity)->set('views = views + 1')->where('id')->eq($activityID)->exec();
+            $this->dao->update(TABLE_ACTIVITY)->set('views = views + 1')->where('id')->eq($activityID)->exec();
             helper::header301($activity->link);
         }
 
@@ -237,7 +237,7 @@ class activity extends control
         $this->view->category    = $category;
         $this->view->contact     = $this->loadModel('company')->getContact();
 
-        $this->dao->update(TABLE_activity)->set('views = views + 1')->where('id')->eq($activityID)->exec();
+        $this->dao->update(TABLE_ACTIVITY)->set('views = views + 1')->where('id')->eq($activityID)->exec();
 
         $this->display();
     }

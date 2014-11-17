@@ -22,24 +22,10 @@
   <form method='post' id='ajaxForm'>
     <table class='table table-form'>
       <?php if($type != 'page'):?>
-      <tr>
-        <th class='w-100px'><?php echo $lang->activity->category;?></th>
-        <td class='w-p40'><?php echo html::select("categories[]", $categories, array_keys($activity->categories), "multiple='multiple' class='form-control chosen'");?></td><td></td>
-      </tr>
       <tbody class='activityInfo'>
       <tr>
         <th><?php echo $lang->activity->author;?></th>
         <td><?php echo html::input('author', $activity->author, "class='form-control'");?></td>
-      </tr>
-      <tr>
-        <th><?php echo $lang->activity->source;?></th>
-        <td><?php echo html::select('source', $lang->activity->sourceList, $activity->source, "class='form-control chosen'");?></td>
-        <td>
-          <div id='copyBox' class='row'>
-            <div class='col-sm-4'><?php echo html::input('copySite', $activity->copySite, "class='form-control' placeholder='{$lang->activity->copySite}'"); ?> </div>
-            <div class='col-sm-8'><?php echo html::input('copyURL',  $activity->copyURL, "class='form-control' placeholder='{$lang->activity->copyURL}'"); ?></div>
-          </div>
-        </td>
       </tr>
       </tbody>
       <?php endif; ?>
@@ -57,41 +43,24 @@
           </div>
         </td>
       </tr>
-      <tr class='link'>
-        <th><?php echo $lang->activity->link;?></th>
-        <td colspan='2'>
-          <div class='required required-wrapper'></div>
-          <?php echo html::input('link', $activity->link, "class='form-control' placeholder='{$lang->activity->placeholder->link}'");?>
-        </td>
-      </tr>
-      <tbody class='activityInfo'>
       <tr>
-        <th><?php echo $lang->activity->alias;?></th>
-        <td colspan='2'>
-          <div class='input-group'>
-            <?php if($type == 'page'):?>
-            <span class="input-group-addon">http://<?php echo $this->server->http_host . $config->webRoot?>page/</span>
-            <?php else:?>
-            <span class="input-group-addon">http://<?php echo $this->server->http_host . $config->webRoot . $type?>/id_</span>
-            <?php endif;?>
-            <?php echo html::input('alias', $activity->alias, "class='form-control' placeholder='{$lang->alias}'");?>
-            <span class='input-group-addon w-70px'>.html</span>
-          </div>
-        </td>
+        <th><?php echo $lang->activity->place;?></th>
+        <td colspan='2'><?php echo html::textarea('place', $activity->place, "rows='2' class='form-control'");?></td>
       </tr>
-      <tr>
-        <th><?php echo $lang->activity->keywords;?></th>
-        <td colspan='2'> <?php echo html::input('keywords', $activity->keywords, "class='form-control'");?></td>
-      </tr>
-      </tbody>
       <tr>
         <th><?php echo $lang->activity->summary;?></th>
         <td colspan='2'><?php echo html::textarea('summary', $activity->summary, "rows='2' class='form-control'");?></td>
       </tr>
       <tbody class='activityInfo'>
-      <tr>
-        <th><?php echo $lang->activity->content;?></th>
-        <td colspan='2'><?php echo html::textarea('content', htmlspecialchars($activity->content), "rows='10' class='form-control'");?></td>
+       <tr>
+        <th><?php echo $lang->activity->activityDate;?></th>
+        <td>
+          <div class="input-append date">
+            <?php echo html::input('activityDate',formatTime($activity->activityDate), "class='form-control'");?>
+            <span class='add-on'><button class="btn btn-default" type="button"><i class="icon-calendar"></i></button></span>
+          </div>
+        </td>
+        <td><span class="help-inline"><?php echo $lang->activity->placeholder->activityDate;?></span></td>
       </tr>
       <tr>
         <th><?php echo $lang->activity->addedDate;?></th>
