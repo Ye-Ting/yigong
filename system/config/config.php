@@ -69,12 +69,13 @@ $config->file->maxSize = 1024 * 1024;  // Max size allowed(Byte).
 
 /* Module dependence setting. */
 $config->dependence = new stdclass();
-$config->dependence->blog[]    = 'blog';
-$config->dependence->book[]    = 'book';
-$config->dependence->user[]    = 'user';
-$config->dependence->forum[]   = 'forum';
-$config->dependence->forum[]   = 'user';
-$config->dependence->message[] = 'message';
+$config->dependence->blog[]     = 'blog';
+$config->dependence->activity[] = 'activity';
+$config->dependence->book[]     = 'book';
+$config->dependence->user[]     = 'user';
+$config->dependence->forum[]    = 'forum';
+$config->dependence->forum[]    = 'user';
+$config->dependence->message[]  = 'message';
 
 /* Database settings. */
 $config->db = new stdclass();          

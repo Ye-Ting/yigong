@@ -28,12 +28,13 @@ $lang->nav->types['custom']  = '自定义';
 
 /* common navs.*/
 $lang->nav->system = new stdclass();
-$lang->nav->system->home    = '首页';
-$lang->nav->system->company = '关于我们';
-$lang->nav->system->forum   = '论坛';
-$lang->nav->system->blog    = '博客';
-$lang->nav->system->book    = '手册';
-$lang->nav->system->message = '留言';
+$lang->nav->system->home     = '首页';
+$lang->nav->system->company  = '关于我们';
+$lang->nav->system->forum    = '论坛';
+$lang->nav->system->blog     = '博客';
+$lang->nav->system->activity = '活动';
+$lang->nav->system->book     = '手册';
+$lang->nav->system->message  = '留言';
 
 /* Targets setting. */
 $lang->nav->newWindow = new stdclass();

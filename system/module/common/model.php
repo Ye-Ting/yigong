@@ -95,9 +95,10 @@ class commonModel extends model
             $referer = helper::safe64Encode($this->app->getURI(true));
             die(js::locate(helper::createLink('user', 'login', "referer=$referer")));
         }
-
+        // var_dump(!commonModel::hasPriv($module, $method));
         /* Check the priviledge. */
         if(!commonModel::hasPriv($module, $method)) $this->deny($module, $method);
+
     }
 
     /**
@@ -120,8 +121,10 @@ class commonModel extends model
         }
 
         if(!commonModel::isAvailable($module)) return false;
-
+        
         $rights  = $app->user->rights;
+
+        // var_dump($rights);
         if(isset($rights[strtolower($module)][strtolower($method)])) return true;
         return false;
     }

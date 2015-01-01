@@ -19,8 +19,8 @@ class activity extends control
      */
     public function index()
     {   
-        $category = $this->loadModel('tree')->getFirst('activity');
-        if($category) $this->locate(inlink('browse', "category=$category->id"));
+        // $category = $this->loadModel('tree')->getFirst('activity');
+        // if($category) $this->locate(inlink('browse', "category=$category->id"));
         $this->locate($this->createLink('index'));
     }   
 

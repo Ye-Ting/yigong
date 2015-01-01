@@ -33,6 +33,9 @@ if(!isset($config->installed) or !$config->installed) die(header('location: inst
 $common = $app->loadCommon();
 $app->parseRequest();
 $common->checkPriv();
+
+ // $rights  = $app->user->rights;
+ // var_dump($app->user);
 $app->loadModule();
 
 /* Flush the buffer. */

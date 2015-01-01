@@ -1134,14 +1134,17 @@ class router
     {
         $moduleName = $this->moduleName;
         $methodName = $this->methodName;
-
+        // echo $moduleName;
+        // echo $methodName;
         /* Include the contror file of the module. */
         $file2Included = $this->setActionExtFile() ? $this->extActionFile : $this->controlFile;
+        // echo $file2Included;
         chdir(dirname($file2Included));
         include $file2Included;
 
         /* Set the class name of the control. */
         $className = class_exists("my$moduleName") ? "my$moduleName" : $moduleName;
+
         if(!class_exists($className)) $this->triggerError("the control $className not found", __FILE__, __LINE__, $exit = true);
 
         /* Create a instance of the control. */
@@ -1168,7 +1171,7 @@ class router
         {
             $this->setParamsByGET($defaultParams);
         }
-
+        // echo $methodName;
         /* Call the method. */
         call_user_func_array(array(&$module, $methodName), $this->params);
         return $module;
