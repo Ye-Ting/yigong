@@ -21,7 +21,8 @@ class activity extends control
     {   
         // $category = $this->loadModel('tree')->getFirst('activity');
         // if($category) $this->locate(inlink('browse', "category=$category->id"));
-        $this->locate($this->createLink('index'));
+        $this->locate(inlink('browse'));
+        // $this->locate($this->createLink('index'));
     }   
 
     /** 
@@ -34,37 +35,48 @@ class activity extends control
      */
     public function browse($categoryID = 0, $pageID = 1)
     {   
-        $category = $this->loadModel('tree')->getByID($categoryID, 'activity');
+        // $category = $this->loadModel('tree')->getByID($categoryID, 'activity');
 
-        if($category->link) helper::header301($category->link);
+        // if($category->link) helper::header301($category->link);
 
         $this->app->loadClass('pager', $static = true);
         $pager = new pager($recTotal = 0, $this->config->activity->recPerPage, $pageID);
 
         $categoryID = is_numeric($categoryID) ? $categoryID : $category->id;
-        $activitys   = $this->activity->getList('activity', $this->tree->getFamily($categoryID, 'activity'), 'addedDate_desc', $pager);
+        // $activitys   = $this->activity->getList('activity', $this->tree->getFamily($categoryID, 'activity'), 'addedDate_desc', $pager);
+        // $families = $categoryID ? $this->loadModel('tree')->getFamily($categoryID, $type) : '';
+        $activitys = $this->activity->getList($type, ' ', 'id_desc', $pager);
 
-        if($category)
-        {
-            $title    = $category->name;
-            $keywords = trim($category->keywords . ' ' . $this->config->site->keywords);
-            $desc     = strip_tags($category->desc);
-            $this->session->set('activityCategory', $category->id);
-        }
-        else
-        {
-            die($this->fetch('error', 'index'));
-        }
+        // var_dump($activitys);
+        // if($category)
+        // {
+        //     $title    = $category->name;
+        //     $keywords = trim($category->keywords . ' ' . $this->config->site->keywords);
+        //     $desc     = strip_tags($category->desc);
+        //     $this->session->set('activityCategory', $category->id);
+        // }
+        // else
+        // {
+        //     die($this->fetch('error', 'index'));
+        // }
 
-        $this->view->title     = $title;
-        $this->view->keywords  = $keywords;
-        $this->view->desc      = $desc;
-        $this->view->category  = $category;
-        $this->view->activitys  = $activitys;
-        $this->view->pager     = $pager;
-        $this->view->contact   = $this->loadModel('company')->getContact();
+       $this->view->title      = $this->lang->activity->common;
+       $this->view->categoryID = $categoryID;
+       $this->view->activitys   = $activitys;
+       $this->view->pager      = $pager;
+       
+       if($category)
+       {
+           if($category->link) helper::header301($category->link);
 
-        $this->display();
+           $this->view->category = $category;
+           $this->view->title    = $category->name;
+           $this->view->keywords = trim($category->keywords . ' ' . $this->config->site->keywords);
+           $this->view->desc     = strip_tags($category->desc);
+           $this->session->set('articleCategory', $category->id);
+       }
+
+       $this->display();
     }
     
     /**
@@ -295,6 +307,71 @@ class activity extends control
 
         $this->view->title   = $this->lang->activity->js;
         $this->view->activity = $activity;
+        $this->display();
+    }
+
+    public function join($activityID){
+
+        $people['people'] = $this->app->user->account;
+        $people['realName'] = $this->app->user->realname;
+        $people['phone'] = $this->app->user->mobile;
+        $people['activity_id'] = $activityID;
+        $people['status'] = 'normal';
+        // var_dump($this->app->user);
+        $this->activity->join($activityID,$people);
+        // if($category) $this->locate(inlink('browse', "category=$category->id"));
+        // $this->locate(inlink('view', "id=$activityID"));
+        $this->send(array('result' => 'success', 'message' => $lang->activity->EnrollSuccess, 'locate'=>inlink('view', "id=$activityID")));
+    }
+
+    /**
+     * Show the people of one object, and print the people form.
+     * 
+     * @param string $objectType 
+     * @param string $objectID 
+     * @access public
+     * @return void
+     */
+    public function people($activityID, $pageID = 1)
+    {
+        $this->app->loadClass('pager', $static = true);
+        $pager = new pager($recTotal = 0 , 10, $pageID);
+        // $this->view->objectType  = $objectType;
+        // $this->view->objectID    = $objectID;
+
+        $this->view->peoples    = $this->activity->getByObject( $activityID, $pager);
+        $this->view->pager       = $pager;
+        $this->view->startNumber = ($pageID - 1) * 10;
+        $this->lang->message     = $this->lang->people;
+        $this->display();
+    }
+
+
+    public function record($value='')
+    {
+
+        if($_POST)
+        {
+            // if (condition) {
+            //     # code...
+            // }
+            // $this->send(array('result' => 'fail', 'message' => dao::getError()));
+            $this->activity->createRecords();
+            if(dao::isError()) $this->send(array('result' => 'fail', 'message' => dao::getError()));
+            // $this->send(array('result' => 'fail', 'message' => dao::getError()));
+            $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('admin')));
+        }
+        $activities_all = $this->activity->getAll();
+        $activities = [ 0 =>'' ];
+        foreach ($activities_all as $key => $value) {
+            // echo $key;
+            // echo $value['title'];
+            // var_dump($value);
+            $activities[$key] =  date('Y-m-d',strtotime($value->date)) .' | '. $value->title ;
+            // $activities = array_add($activities,$key,$value['title']);
+        }
+        $this->view->activities = $activities;
+        // var_dump($this->view->activities);
         $this->display();
     }
 }

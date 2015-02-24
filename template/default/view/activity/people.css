@@ -1,0 +1,13 @@
+.modal-dialog{width: 700px;}
+.panel-body>.peoples-list {margin: -15px -15px 0;}
+.people{padding: 10px 15px; transition: all 0.5s;}
+.people p{padding-left:3px;}
+.people>.peoples-list {margin-top: 5px; margin-left: 18px; padding-left: 25px;}
+.people>.people {border:1px solid #ccc;}
+.people:hover {background-color: #fafafa;}
+.people>.peoples-list>.people:hover {background-color: #fff}
+.people .reply-box{padding:10px 0;}
+
+.pager {margin: 0; display: block;}
+.pager > .page { margin-bottom: -15px; font-size: 12px; text-align: right; color: #999;}
+.signed-user-info{padding: 6px 2px}

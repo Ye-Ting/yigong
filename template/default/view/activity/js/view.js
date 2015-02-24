@@ -1,4 +1,8 @@
 $(document).ready(function()
 {
-    $('#commentBox').load( createLink('message', 'comment', 'objectType=article&objectID=' + v.articleID) );  
+    $('#peopleBox').load( createLink('message', 'people', 'objectType=activity&objectID=' + v.activityID) );  
+});
+$(document).ready(function()
+{
+    $('.nav-system-activity').addClass('active');
 });

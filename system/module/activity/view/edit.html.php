@@ -51,12 +51,16 @@
         <th><?php echo $lang->activity->summary;?></th>
         <td colspan='2'><?php echo html::textarea('summary', $activity->summary, "rows='2' class='form-control'");?></td>
       </tr>
+      <tr>
+        <th><?php echo $lang->activity->content;?></th>
+        <td colspan='2'><?php echo html::textarea('content', $activity->content, "rows='10' class='form-control'");?></td>
+      </tr>
       <tbody class='activityInfo'>
        <tr>
         <th><?php echo $lang->activity->activityDate;?></th>
         <td>
           <div class="input-append date">
-            <?php echo html::input('activityDate',formatTime($activity->activityDate), "class='form-control'");?>
+            <?php echo html::input('date',formatTime($activity->date), "class='form-control'");?>
             <span class='add-on'><button class="btn btn-default" type="button"><i class="icon-calendar"></i></button></span>
           </div>
         </td>

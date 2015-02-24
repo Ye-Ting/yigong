@@ -134,6 +134,11 @@ $lang->article = new stdclass();
 $lang->article->menu = new stdclass();
 $lang->article->menu->browse = array('link' => 'List|article|admin|', 'alias' => 'create, edit');
 
+
+// $lang->activity = new stdclass();
+// $lang->activity->menu = new stdclass();
+// $lang->activity->menu->browse = array('link' => 'List|article|admin|', 'alias' => 'create, edit');
+
 /* Menu of blog module. */
 $lang->blog = new stdclass();
 $lang->blog->menu = new stdclass();

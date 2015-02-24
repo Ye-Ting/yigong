@@ -135,6 +135,12 @@ $lang->article = new stdclass();
 $lang->article->menu = new stdclass();
 $lang->article->menu->browse = array('link' => '文章列表|article|admin|', 'alias' => 'create, edit');
 
+$lang->activity = new stdclass();
+$lang->activity->menu = new stdclass();
+$lang->activity->menu->browse = array('link' => '活动列表|activity|admin|', 'alias' => 'create, edit');
+$lang->activity->menu->record = array('link' => '义工服务记录|activity|record|');
+$lang->activity->menu->volunteer = array('link' => '义工管理|volunteer|admin|', 'alias' => 'create, edit');
+
 /* Menu of blog module. */
 $lang->blog = new stdclass();
 $lang->blog->menu = new stdclass();

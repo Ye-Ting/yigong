@@ -32,10 +32,10 @@ if(!isset($config->installed) or !$config->installed) die(header('location: inst
 /* Connect to db, load module. */
 $common = $app->loadCommon();
 $app->parseRequest();
+ // var_dump($app->user);
 $common->checkPriv();
 
  // $rights  = $app->user->rights;
- // var_dump($app->user);
 $app->loadModule();
 
 /* Flush the buffer. */

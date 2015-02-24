@@ -41,6 +41,7 @@ $config->default->method = 'index';
 /* Run it. */
 $common = $app->loadCommon();
 $app->parseRequest();
+ // var_dump($app->user);
 $common->checkPriv();
 $app->loadModule();
 

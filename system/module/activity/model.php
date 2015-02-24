@@ -98,8 +98,8 @@ class activityModel extends model
             /* Get activitys(use groupBy to distinct activitys).  */
             $activitys = $this->dao->select('*')->from(TABLE_ACTIVITY)
                 ->beginIf(defined('RUN_MODE') and RUN_MODE == 'front')
-                ->andWhere('t1.addedDate')->le(helper::now())
-                ->andWhere('t1.status')->eq('normal')
+                ->where('addedDate')->le(helper::now())
+                ->andWhere('status')->eq('normal')
                 ->fi()
                 ->orderBy($orderBy)
                 ->page($pager)
@@ -148,6 +148,18 @@ class activityModel extends model
         return $activitys;
     }
 
+
+    public function getAll()
+    {
+        $activitys = $this->dao->select('*')->from(TABLE_ACTIVITY)
+            ->orderBy('id_desc')
+            ->fetchAll('id');
+
+        if(!$activitys) return array();
+        return $activitys;
+    }
+
+    
     /**
      * Get page pairs.
      * 
@@ -245,7 +257,7 @@ class activityModel extends model
     public function getPrevAndNext($current, $category)
     {
         $current = $this->getByID($current);
-        $prev = $this->dao->select('t1.id, title, alias')->from(TABLE_ACTIVITY)->alias('t1')
+        $prev = $this->dao->select('t1.id, title')->from(TABLE_ACTIVITY)->alias('t1')
            ->leftJoin(TABLE_RELATION)->alias('t2')->on('t1.id = t2.id')
            ->where('t2.category')->eq($category)
            ->andWhere('t1.status')->eq('normal')
@@ -254,7 +266,7 @@ class activityModel extends model
            ->limit(1)
            ->fetch();
 
-       $next = $this->dao->select('t1.id, title, alias')->from(TABLE_ACTIVITY)->alias('t1')
+       $next = $this->dao->select('t1.id, title')->from(TABLE_ACTIVITY)->alias('t1')
            ->leftJoin(TABLE_RELATION)->alias('t2')->on('t1.id = t2.id')
            ->where('t2.category')->eq($category)
            ->andWhere('t1.addedDate')->le(helper::now())
@@ -268,6 +280,8 @@ class activityModel extends model
     }
 
     /**
+     * 添加活动信息 
+     * 需要添加的信息 编号 姓名 联系方式 身份证号 组别
      * Create an activity.
      * 
      * @param  string $type 
@@ -278,10 +292,10 @@ class activityModel extends model
     {
         $now = helper::now();
         $activity = fixer::input('post')
+            ->stripTags('content', $this->config->allowedTags->admin)
             ->setDefault('addedDate', $now)
             ->add('editedDate', $now)
             ->get();
-        // var_dump($activity);
         $this->dao->insert(TABLE_ACTIVITY)
             ->data($activity, $skip = 'uid,isLink')
             ->autoCheck()
@@ -289,17 +303,23 @@ class activityModel extends model
 
         $activityID = $this->dao->lastInsertID();
 
-        // $this->loadModel('file')->updateObjectID($this->post->uid, $activityID, $type);
-        // $this->file->copyFromContent($this->post->content, $activityID, $type);
+        // // $this->loadModel('file')->updateObjectID($this->post->uid, $activityID, $type);
+        // // $this->file->copyFromContent($this->post->content, $activityID, $type);
 
         if(dao::isError()) return false;
 
-        /* Save activity keywords. */
-        // $this->loadModel('tag')->save($activity->keywords);
+        // /* Save activity keywords. */
+        // // $this->loadModel('tag')->save($activity->keywords);
 
-        // if($type != 'page') $this->processCategories($activityID, $type, $this->post->categories);
+        // // if($type != 'page') $this->processCategories($activityID, $type, $this->post->categories);
         return $activityID;
     }
+
+    // 义工信息查询
+    // 需要根据义工注册编号 身份证号 查询
+
+
+
 
     /**
      * Update an activity.
@@ -314,6 +334,7 @@ class activityModel extends model
         // $category = array_keys($activity->categories);
 
         $activity = fixer::input('post')
+            ->stripTags('content', $this->config->allowedTags->admin)
             ->add('editedDate', helper::now())
             ->get();
 
@@ -473,5 +494,104 @@ class activityModel extends model
         $this->dao->update(TABLE_ACTIVITY)->data($data, $skip = 'uid')->autoCheck()->where('id')->eq($activityID)->exec();
         
         return !dao::isError();
+    }
+
+
+    public function join($activityID,$people)
+    {
+        $now = helper::now();
+
+        $people['addedDate'] = $now;
+        $people['editedDate'] = $now;
+
+
+        $this->dao->insert(TABLE_ACTIVITY_PEOPLE)
+            ->data($people)
+            ->autoCheck()
+            ->exec();
+        // $this->getByID($activityID)
+    }
+
+    /**
+     * Get peoples of one object.
+     * 
+     * @param  int    $objectID      the object id
+     * @access public
+     * @return array
+     */
+    public function getByObject($objectID, $pager = null)
+    {
+        // $userMessages = $this->cookie->cmts;
+        // $userMessages = trim($userMessages, ',');
+        // if(empty($userMessages)) $userMessages = '0';
+        return  $this->dao->select('*')->from(TABLE_ACTIVITY_PEOPLE)
+            ->where('activity_id')->eq($objectID)
+            ->beginIf(RUN_MODE == 'front')->andWhere('status')->eq('normal')->fi()
+            ->orderBy('id_desc')
+            ->page($pager)
+            ->fetchAll();
+    }
+
+
+    public function createRecords()
+    {
+        $now = helper::now();
+        $records = fixer::input('post')
+            ->setDefault('addedDate', $now)
+            ->add('editedDate', $now)
+            ->add('status', 'normal')
+            ->get();
+
+        // var_dump($records);
+
+        for ($i=0; $i < 8 ; $i++) { 
+            $record = [];
+            $record['addedDate'] = $records->addedDate;
+            $record['editedDate'] = $records->editedDate;
+            $record['status'] = $records->status;
+            $record['people'] = $records->volunteer_id;
+            // var_dump($records->activities);
+            // echo $records->activities[i];
+            // var_dump(i);
+            
+            if ($records->activities[$i]) {
+                $record['activity_id'] = $records->activities[$i];
+                $record['content'] = $records->content[$i];
+                $record['hour'] = $records->hour[$i];
+                $record['mark'] = $records->mark[$i];
+
+                // var_dump($record);
+
+                $this->dao->insert(TABLE_ACTIVITY_PEOPLE)
+                    ->data($record)
+                    ->autoCheck()
+                    ->batchCheck('people, activity_id, content, hour', 'notempty')
+                    ->exec();
+
+                if(dao::isError()) return false;
+
+            }else{
+                continue ;
+            }
+            
+        }
+
+        return true;
+
+        // $this->dao->insert(TABLE_ARTICLE)
+        //     ->data($article, $skip = 'categories,uid,isLink')
+        //     ->autoCheck()
+        //     ->batchCheckIF($type != 'page' and !$this->post->isLink, $this->config->article->require->edit, 'notempty')
+        //     ->batchCheckIF($type == 'page' and !$this->post->isLink, $this->config->article->require->page, 'notempty')
+        //     ->batchCheckIF($type != 'page' and $this->post->isLink, $this->config->article->require->link, 'notempty')
+        //     ->batchCheckIF($type == 'page' and $this->post->isLink, $this->config->article->require->pageLink, 'notempty')
+        //     ->checkIF(($type == 'page') and $this->post->alias, 'alias', 'unique', "type='page'")
+        //     ->exec();
+        // $articleID = $this->dao->lastInsertID();
+
+        // $this->loadModel('file')->updateObjectID($this->post->uid, $articleID, $type);
+        // $this->file->copyFromContent($this->post->content, $articleID, $type);
+
+        // if(dao::isError()) return false;
     }
 }

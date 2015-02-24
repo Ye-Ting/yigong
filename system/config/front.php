@@ -23,7 +23,11 @@ $config->rights->guest['blog']['index']  = 'index';
 $config->rights->guest['blog']['view']   = 'view';
 
 $config->rights->guest['activity']['index']  = 'index';
+$config->rights->guest['activity']['browse']  = 'browse';
 $config->rights->guest['activity']['view']   = 'view';
+
+$config->rights->guest['volunteer']['index']   = 'index';
+$config->rights->guest['volunteer']['create']   = 'create';
 
 $config->rights->guest['product']['index']  = 'index';
 $config->rights->guest['product']['browse'] = 'browse';
@@ -87,6 +91,8 @@ $config->rights->member['reply']['eidt']       = 'edit';
 $config->rights->member['reply']['hide']       = 'hide';
 $config->rights->member['reply']['delete']     = 'delete';
 $config->rights->member['reply']['deletefile'] = 'deletefile';
+
+$config->rights->member['activity']['join'] = 'join';
 
 $config->rights->member['user']['control'] = 'control';
 $config->rights->member['user']['profile'] = 'profile';

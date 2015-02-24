@@ -270,7 +270,7 @@ class control
     {
         $moduleName = strtolower(trim($moduleName));
         $methodName = strtolower(trim($methodName));
-
+        
         $modulePath = $this->app->getModulePath($moduleName);
         $viewExtPath = $this->app->getModuleExtPath($moduleName, 'view');
 

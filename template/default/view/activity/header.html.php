@@ -15,7 +15,7 @@ if($extView = $this->getExtViewFile(__FILE__)){include $extView; return helper::
 $webRoot   = $config->webRoot;
 $jsRoot    = $webRoot . "js/";
 $themeRoot = $webRoot . "template/default/theme/";
-$navs = $this->tree->getChildren(0, 'activity');
+// $navs = $this->tree->getChildren(0, 'activity');
 ?>
 <!DOCTYPE html>
 <?php if(!empty($config->oauth->sina)):?>

@@ -107,6 +107,8 @@ define('TABLE_PRODUCT',        $config->db->prefix . 'product');
 define('TABLE_PRODUCT_CUSTOM', $config->db->prefix . 'product_custom');
 define('TABLE_ARTICLE',        $config->db->prefix . 'article');
 define('TABLE_ACTIVITY',       $config->db->prefix . 'activity');
+define('TABLE_ACTIVITY_PEOPLE',       $config->db->prefix . 'activity_people');
+define('TABLE_VOLUNTEER',      $config->db->prefix . 'volunteer');
 define('TABLE_BLOCK',          $config->db->prefix . 'block');
 define('TABLE_TAG',            $config->db->prefix . 'tag');
 define('TABLE_BOOK',           $config->db->prefix . 'book');

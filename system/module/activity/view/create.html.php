@@ -58,15 +58,15 @@
           <td colspan='2'><?php echo html::textarea('summary', '', "rows='2' class='form-control'");?></td>
         </tr>
         <tbody class='activityInfo'>
-        <!-- <tr>
+        <tr>
           <th><?php echo $lang->activity->content;?></th>
           <td colspan='2'><?php echo html::textarea('content', '', "rows='10' class='form-control'");?></td>
-        </tr> -->
+        </tr>
          <tr>
           <th><?php echo $lang->activity->activityDate;?></th>
           <td>
             <div class="input-append date">
-              <?php echo html::input('activityDate', date('Y-m-d H:i'), "class='form-control'");?>
+              <?php echo html::input('date', date('Y-m-d H:i'), "class='form-control'");?>
               <span class='add-on'><button class="btn btn-default" type="button"><i class="icon-calendar"></i></button></span>
             </div>
           </td>

@@ -40,6 +40,7 @@ $lang->activity->css        = 'CSS';
 $lang->activity->js         = 'JS';
 $lang->activity->place 		= '活动地点';
 
+$lang->activity->home       = '活动';
 $lang->activity->list       = '活动列表';
 $lang->activity->admin      = '维护活动';
 $lang->activity->create     = '发布活动';
@@ -47,10 +48,7 @@ $lang->activity->edit       = '编辑活动';
 $lang->activity->files      = '附件';
 $lang->activity->images     = '图片';
 
-$lang->blog->admin  = '维护博客';
-$lang->blog->list   = '博客列表';
-$lang->blog->create = '发布博客';
-$lang->blog->edit   = '编辑博客';
+$lang->activity->people     = '志愿者';
 
 $lang->page->admin  = '维护单页';
 $lang->page->list   = '单页列表';
@@ -65,6 +63,9 @@ $lang->activity->statusList['normal'] = '正常';
 $lang->activity->statusList['draft']  = '草稿';
 
 $lang->activity->confirmDelete = '您确定删除该活动吗？';
+
+$lang->activity->lblEnrollBtn = '活动报名';
+$lang->activity->EnrollSuccess = '报名成功';
 
 $lang->activity->lblAddedDate = '<strong>添加时间：</strong> %s &nbsp;&nbsp;';
 $lang->activity->lblAuthor    = "<strong>作者：</strong> %s &nbsp;&nbsp;";
