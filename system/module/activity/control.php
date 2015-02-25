@@ -362,7 +362,7 @@ class activity extends control
             $this->send(array('result' => 'success', 'message' => $this->lang->saveSuccess, 'locate' => inlink('admin')));
         }
         $activities_all = $this->activity->getAll();
-        $activities = [ 0 =>'' ];
+        $activities = array(0 =>'');
         foreach ($activities_all as $key => $value) {
             // echo $key;
             // echo $value['title'];

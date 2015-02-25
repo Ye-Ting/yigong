@@ -60,7 +60,7 @@ class volunteer extends control
         if ($volunteers) {
             $this->send($volunteers);
         }else{
-            $this->send([]);
+            $this->send(array());
         }
     }
 

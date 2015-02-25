@@ -545,7 +545,7 @@ class activityModel extends model
         // var_dump($records);
 
         for ($i=0; $i < 8 ; $i++) { 
-            $record = [];
+            $record = array();
             $record['addedDate'] = $records->addedDate;
             $record['editedDate'] = $records->editedDate;
             $record['status'] = $records->status;
